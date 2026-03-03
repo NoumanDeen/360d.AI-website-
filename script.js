@@ -27,26 +27,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Navbar Scroll Background Effect
     const navMenu = document.querySelector('.Nav_mainNav__pyKU_');
+    const navRoot = document.querySelector('nav.Nav');
+    const mobilePillNav = document.getElementById('mobile-pill-nav');
+    const pillHamburger = document.getElementById('pillHamburger');
+    const mainHamburger = document.querySelector('.Hamburger_root__vVMOe');
     let lastScrollY = window.scrollY;
+
+    // Wire pill hamburger to open the main nav menu
+    if (pillHamburger && mainHamburger) {
+        pillHamburger.addEventListener('click', () => {
+            mainHamburger.click();
+        });
+    }
 
     if (navMenu) {
         window.addEventListener('scroll', () => {
             const currentScrollY = window.scrollY;
+            const isMobile = window.innerWidth <= 768;
 
             if (currentScrollY > 50) {
                 navMenu.classList.add('scrolled');
+                if (navRoot) navRoot.classList.add('scrolled');
 
-                // Determine scroll direction
+                // Show pill only on mobile
+                if (isMobile && mobilePillNav) {
+                    mobilePillNav.classList.add('visible');
+                }
+
                 if (currentScrollY > lastScrollY) {
-                    // Scrolling down
                     navMenu.classList.add('scrolled-down');
                 } else {
-                    // Scrolling up
                     navMenu.classList.remove('scrolled-down');
                 }
             } else {
                 navMenu.classList.remove('scrolled');
                 navMenu.classList.remove('scrolled-down');
+                if (navRoot) navRoot.classList.remove('scrolled');
+
+                if (mobilePillNav) {
+                    mobilePillNav.classList.remove('visible');
+                }
             }
 
             lastScrollY = currentScrollY;
@@ -221,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Section 4: Crossfade Animation ---
     const crossfadeText = document.querySelectorAll('#section4-crossfade .crossfade-text');
     const crossfadeImgs = document.querySelectorAll('#section4-crossfade .crossfade-img');
+    const wordOverlay = document.querySelector('#section4-crossfade .s4-word-overlay');
 
     if (crossfadeText.length > 0 && crossfadeImgs.length > 0) {
         let currentIndex = 0;
@@ -237,6 +258,60 @@ document.addEventListener('DOMContentLoaded', () => {
             // Add active classes to new elements
             crossfadeText[currentIndex].classList.add('active');
             crossfadeImgs[currentIndex].classList.add('active');
+
+            // Sync mobile word overlay
+            if (wordOverlay) {
+                wordOverlay.textContent = crossfadeText[currentIndex].textContent;
+            }
         }, 2000); // 2000ms = 2 seconds
+    }
+
+    // --- Dynamic SVG Mask for Section 4 (Zoox exact pixel-cutout replication) ---
+    function updateSection4Mask() {
+        const card = document.querySelector('#section4-crossfade .Section3_mediaCard');
+        const overlay = document.querySelector('#section4-crossfade .s4-word-overlay');
+        const pathEl = document.querySelector('#section4-cutout path');
+
+        if (!card || !overlay || !pathEl) return;
+
+        const w = card.offsetWidth;
+        const h = card.offsetHeight;
+        if (w === 0 || h === 0) return;
+
+        const cw = overlay.offsetWidth;
+        const ch = overlay.offsetHeight;
+
+        // Match the border-radius applied in CSS
+        const rootFontSize = parseFloat(window.getComputedStyle(document.documentElement).fontSize) || 10;
+        const r = 2.8 * rootFontSize; // 2.8rem
+
+        // Safety check, avoid breaking if cutout is bigger than card
+        if (cw > w || ch > h) return;
+
+        // Bezier ratio for smooth circle approximation
+        const k = r * 0.28;
+
+        const d = `M0 ${r} ` +
+            `C 0 ${k} ${k} 0 ${r} 0 ` +
+            `L ${w - r} 0 ` +
+            `C ${w - k} 0 ${w} ${k} ${w} ${r} ` +
+            `L ${w} ${h - ch - r} ` +
+            `C ${w} ${h - ch - k} ${w - k} ${h - ch} ${w - r} ${h - ch} ` +
+            `L ${w - cw + r} ${h - ch} ` +
+            `C ${w - cw + k} ${h - ch} ${w - cw} ${h - ch + k} ${w - cw} ${h - ch + r} ` +
+            `L ${w - cw} ${h - r} ` +
+            `C ${w - cw} ${h - k} ${w - cw - k} ${h} ${w - cw - r} ${h} ` +
+            `L ${r} ${h} ` +
+            `C ${k} ${h} 0 ${h - k} 0 ${h - r} Z`;
+
+        pathEl.setAttribute('d', d);
+    }
+
+    // Run on load and whenever the card wrapper resizes
+    const s4Observer = new ResizeObserver(updateSection4Mask);
+    const cardWrap = document.querySelector('#section4-crossfade .s4-card-wrap');
+    if (cardWrap) {
+        s4Observer.observe(cardWrap);
+        updateSection4Mask();
     }
 });
