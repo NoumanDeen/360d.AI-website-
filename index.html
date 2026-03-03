@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoox - Hero Replica</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="2f1823c4febb0d78.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+    <style>
+        /* Base Lenis Smooth Scroller Styles */
+        html.lenis,
+        html.lenis body {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto !important;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
+
+        .lenis.lenis-stopped {
+            overflow: hidden;
+        }
+
+        .lenis.lenis-smooth iframe {
+            pointer-events: none;
+        }
+
+        /* Hide the native scrollbar since Lenis handles it smoothly */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        @import url('https://cdn.jsdelivr.net/npm/geist@1.0.3/dist/fonts/geist-sans/style.css');
+
+        @font-face {
+            font-family: 'Geist';
+            src: url('./geist-font-v1.7.0/geist-font/Geist/webfonts/Geist-Regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Geist';
+            src: url('./geist-font-v1.7.0/geist-font/Geist/webfonts/Geist-Medium.woff2') format('woff2');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Geist';
+            src: url('./geist-font-v1.7.0/geist-font/Geist/webfonts/Geist-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        p,
+        a,
+        div,
+        span,
+        .HomepageHeroBespoke_title__C_bJm,
+        .HomepageHeroBespoke_title__C_bJm *,
+        .DynamicTag,
+        .DynamicTag * {
+            font-family: 'Geist', 'Geist Sans', sans-serif !important;
+        }
+
+        /* Fix for sharp bottom corners on video using hardware acceleration trick and clip-path */
+        .HomepageHeroBespoke_videoWrapper__clMjH {
+            /* Massive 6.4rem bottom curve, perfectly round */
+            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            overflow: hidden !important;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            mask-image: -webkit-radial-gradient(white, black);
+            /* Force hardware acceleration so Webkit browsers actually crop the video corners */
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            display: block;
+            /* Apply clip-path ONLY to the outer visible box, NOT the overflowing video itself */
+            clip-path: inset(0px round 3.6rem 3.6rem 6.4rem 6.4rem) !important;
+            -webkit-clip-path: inset(0px round 3.6rem 3.6rem 6.4rem 6.4rem) !important;
+        }
+
+        .HomepageHeroBespoke_video__lYhfm,
+        .Media_container__Cws3C,
+        .Media_videoContainer__ID5oo,
+        .BaseVideo_root__D4U1s,
+        .Media_media__UMZXy,
+        .Media_video__gOXsr {
+            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            overflow: hidden !important;
+        }
+
+        #heroVideoEl {
+            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            overflow: hidden !important;
+            /* Explicitly removed clip-path from the video tag, because object-fit: cover makes the video larger than this container and pushes the curved corners out of bounds! */
+        }
+
+        /* Fix for Section 2 ScrollTrigger Pinning and Sizing */
+        .PageHome_contentBespoke__ZkpR3 {
+            position: relative;
+            z-index: 2;
+            /* Needs to sit above the hero section */
+            background: white;
+            /* Ensure it covers anything underneath when scrolling */
+        }
+
+        .HomepageContentBespoke_root__W9khF {
+            background-color: #fff;
+            display: block;
+            min-height: 100svh;
+            overflow: hidden;
+            position: relative;
+            width: 100vw;
+        }
+
+        .HomepageContentBespoke_mainContainer__cuN8J {
+            height: 100svh;
+            left: 0;
+            position: relative;
+            top: 0;
+            width: 100%;
+        }
+
+        .HomepageContentBespoke_clipContainer__PaUmt {
+            height: 100%;
+            left: 0;
+            min-height: 100svh;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            will-change: clip-path, transform;
+            /* Crucial for smooth animation */
+            -webkit-clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left) round var(--clip-border-radius));
+            clip-path: inset(var(--clip-top) var(--clip-right) var(--clip-bottom) var(--clip-left) round var(--clip-border-radius));
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            /* Hardware acceleration */
+        }
+
+        .HomepageContentBespoke_transformContainer__iPl8h,
+        .HomepageContentBespoke_textContainer__1TpyM,
+        .HomepageContentBespoke_horizontalTextContainer__Jr0f0 {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        /* Cinematic Mute Button Styling */
+        #heroMuteButton {
+            width: 5rem !important;
+            height: 5rem !important;
+            border-radius: 50% !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(8px) !important;
+            -webkit-backdrop-filter: blur(8px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+            transition: all 0.3s ease !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        #heroMuteButton:hover {
+            background: rgba(255, 255, 255, 0.2) !important;
+            transform: scale(1.05) !important;
+        }
+
+        #heroMuteIcon svg {
+            width: 2rem !important;
+            height: 2rem !important;
+            color: white !important;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        /* Hide all the extra complicated layers of the original button to let our custom cinematic style shine */
+        #heroMuteButton .VideoButton_background__OkmD3,
+        #heroMuteButton .VideoButton_track___SRqX,
+        #heroMuteButton .VideoButton_gradient__yrhaC,
+        #heroMuteButton .VideoButton_front__OTjAd {
+            display: none !important;
+        }
+
+        /* --- Section 1 Mobile Optimizations --- */
+        @media (max-width: 767px) {
+
+            /* Reduce top padding of the title */
+            body .HomepageHeroBespoke_root__z4DvB .HomepageHeroBespoke_title__C_bJm {
+                padding-top: 10rem !important;
+                /* Pull up text */
+                padding-bottom: 2rem !important;
+                /* Reduce space before video */
+                font-size: 3.2rem !important;
+                /* Slightly smaller for mobile */
+                line-height: 1.15 !important;
+                max-width: 90vw !important;
+            }
+
+            /* Make text wrap closer to screenshot if possible, without changing the copy */
+            body .HomepageHeroBespoke_title__C_bJm .split-word {
+                font-size: 3.2rem !important;
+            }
+
+            /* Adjust video border radius to be equal on all corners for mobile (approx 3.6rem) */
+            body .HomepageHeroBespoke_videoWrapper__clMjH {
+                border-radius: 3.6rem !important;
+                clip-path: inset(0px round 3.6rem) !important;
+                -webkit-clip-path: inset(0px round 3.6rem) !important;
+                width: calc(100% - 3rem) !important;
+                /* Add a bit more side margin like screenshot */
+            }
+
+            body .HomepageHeroBespoke_video__lYhfm,
+            body .Media_container__Cws3C,
+            body .Media_videoContainer__ID5oo,
+            body .BaseVideo_root__D4U1s,
+            body .Media_media__UMZXy,
+            body .Media_video__gOXsr,
+            body #heroVideoEl {
+                border-radius: 3.6rem !important;
+            }
+
+            /* Perfectly center the Zoox logo in the navbar on mobile */
+            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_routes__woI6v li:nth-child(2) {
+                position: absolute !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            /* Remove desktop translative adjustments on logo */
+            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_routes__woI6v .Nav_logo__4UQaP {
+                transform: none !important;
+                padding: 0 !important;
+            }
+
+            /* Hide the "Skip to content" button on mobile to avoid overlap */
+            .Nav_skipToMain__yN8BZ {
+                display: none !important;
+            }
+
+            /* Ensure hamburger menu has fixed placement on mobile */
+            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_hamburger__mtm_K {
+                left: 1rem !important;
+                position: relative !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="Nav Nav_root__SfQ0K Nav_light__nDQro"
+        style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+        <div class="Nav_wrapper__q7293" style="--navbar-margin-top: 2rem;">
+            <div class="Nav_mainNav__pyKU_ undefined" style="background-color: transparent;">
+                <div class="Nav_shadow__ZPHPl"></div><a tabindex="0" target="_self" href="#mainContent"
+                    class="Cta Cta_root__5_ARo Cta_tertiary__GgtSG Cta_light__2i6S_ Nav_skipToMain__yN8BZ">
+                    <div class="Cta_wrapper__Kma84">
+                        <div class="Cta_iconContainer__B9af6 Cta_arrowLeft__lnqE4"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                class="Cta_icon__8BlFf Cta_svgChevronRight__3LbMB">
+                                <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.5"
+                                    d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                            </svg></div>
+                        <div class="Cta_textContainer__nPLA1">
+                            <p class="Cta_text__WrR0e">Skip to content</p>
+                        </div>
+                        <div class="Cta_iconContainer__B9af6 Cta_arrowRight__gh4kM"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                class="Cta_icon__8BlFf Cta_svgChevronRight__3LbMB">
+                                <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.5"
+                                    d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                            </svg></div>
+                    </div>
+                </a><button class="Hamburger Hamburger_root__vVMOe Nav_hamburger__mtm_K" tabindex="0"
+                    aria-label="open menu" aria-expanded="false"
+                    style="opacity: 1; translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+                    <div class="Hamburger_iconContainer__6qiVI Hamburger_visible__KjBiN"><span
+                            class="Hamburger_line__7tAcM"></span><span class="Hamburger_line__7tAcM"></span></div>
+                    <div class="Hamburger_iconContainer__6qiVI"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 10 10" class="Hamburger_close__E7Aww" aria-hidden="true">
+                            <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                stroke-linejoin="round" stroke-width="1.5"
+                                d="m1.063 1.632 2.016 2.022c.89.892.89 2.336 0 3.228L1.063 8.904M8.688 8.904 6.67 6.88a2.286 2.286 0 0 1 0-3.228l2.017-2.022">
+                            </path>
+                        </svg></div>
+                </button>
+                <ul class="Nav_routes__woI6v">
+                    <li>
+                        <div>
+                            <div class="NavLink NavLink_root__DY6vM"
+                                style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                    class="NavLink_icon__d7MAq" aria-hidden="true">
+                                    <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="1.5"
+                                        d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                                </svg><a class="NavLink_button__KPSEo" tabindex="0" aria-current="false"
+                                    href="/how-it-works/">How It Works</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="NavLink NavLink_root__DY6vM"
+                                style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                    class="NavLink_icon__d7MAq" aria-hidden="true">
+                                    <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="1.5"
+                                        d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                                </svg><a class="NavLink_button__KPSEo" tabindex="0" aria-current="false"
+                                    href="/where-we-deploy/">Where We Deploy</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li style="margin: 0 2rem;">
+                        <a class="Nav_logo__4UQaP" tabindex="0" aria-label="360D Homepage" href="/"
+                            style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px); text-decoration: none; color: currentColor; display: flex; align-items: center; justify-content: center;">
+                            <img src="e01c6d5a26dac546cc06e775dab738a3.png" alt="360D.AI Logo"
+                                style="height: 100%; max-height: 50px; width: auto; object-fit: contain;">
+                        </a>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="NavLink NavLink_root__DY6vM"
+                                style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                    class="NavLink_icon__d7MAq" aria-hidden="true">
+                                    <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="1.5"
+                                        d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                                </svg><a class="NavLink_button__KPSEo" tabindex="0" aria-current="false"
+                                    href="/know-the-system/">Know the System</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="NavLink NavLink_root__DY6vM"
+                                style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px); opacity: 1;">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                    class="NavLink_icon__d7MAq" aria-hidden="true">
+                                    <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                        stroke-linejoin="round" stroke-width="1.5"
+                                        d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                                </svg><a class="NavLink_button__KPSEo" tabindex="0" aria-current="false"
+                                    href="/support/">Support</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul><a tabindex="0"
+                    class="Cta Cta_root__5_ARo Cta_secondary__Rtbqw Cta_light__2i6S_ Nav_newsletterBtn__il7q7"
+                    href="/app/">
+                    <div class="Cta_wrapper__Kma84">
+                        <div class="Cta_iconContainer__B9af6 Cta_arrowLeft__lnqE4"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                class="Cta_icon__8BlFf Cta_svgChevronRight__3LbMB">
+                                <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.5"
+                                    d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                            </svg></div>
+                        <div class="Cta_textContainer__nPLA1">
+                            <p class="Cta_text__WrR0e">GET THE APP</p>
+                        </div>
+                        <div class="Cta_iconContainer__B9af6 Cta_arrowRight__gh4kM"><svg
+                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 5 10"
+                                class="Cta_icon__8BlFf Cta_svgChevronRight__3LbMB">
+                                <path fill="transparent" stroke="currentColor" stroke-linecap="round"
+                                    stroke-linejoin="round" stroke-width="1.5"
+                                    d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                            </svg></div>
+                    </div>
+                </a>
+                <div class="Nav_scrollingLogoContainer__qKZtG"
+                    style="translate: none; rotate: none; scale: none; transform: translate(-50%, 0%) scale(0.6, 0.6); opacity: 0; visibility: hidden;">
+                    <div class="Nav_scrollingLogoShadow__KuHlK" style="opacity: 0; visibility: hidden;"></div>
+                    <div class="ScrollingLogo ScrollingLogo_root__eZmOS"><svg xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 32 17" class="ScrollingLogo_logo__ylaNk">
+                            <path fill="currentColor"
+                                d="M23.292 14.052c0-1.527.125-3.016 1.306-4.265 1.03-1.092 2.37-1.46 3.798-1.543.212-.012.42-.037.57-.211.152-.17.152-.372.135-.575a68 68 0 0 0-.29-2.461c-.182-1.344-.498-2.664-1.7-3.702C25.904.252 24.516.108 23.093.075a338 338 0 0 0-14.187 0c-1.427.028-2.81.177-4.018 1.22-1.202 1.038-1.522 2.358-1.7 3.702a79 79 0 0 0-.29 2.461c-.02.203-.02.405.135.575.151.17.359.199.57.207 1.428.087 2.773.45 3.798 1.547 1.177 1.253 1.307 2.742 1.307 4.265v-.009c0 .145.021.31.168.455s.32.162.472.162h13.304c.151 0 .324-.017.471-.162.147-.14.169-.31.169-.455">
+                            </path>
+                            <g fill="currentColor" data-svg-origin="2.918167838943191 13.756086349487305"
+                                transform="matrix(1,0,0,1,0,0)"
+                                style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px;">
+                                <path
+                                    d="m1.467 11.371.411.393c.2.19.364.364.411.6a.64.64 0 0 1-.194.604.72.72 0 0 1-.632.186c-.246-.045-.428-.203-.627-.393l-.41-.393c-.2-.19-.364-.364-.412-.6a.64.64 0 0 1 .195-.603.72.72 0 0 1 .631-.187c.247.046.429.203.627.393M5.412 12.368l-.41.393c-.2.19-.381.348-.628.393a.7.7 0 0 1-.631-.186.65.65 0 0 1-.195-.604c.047-.236.212-.41.41-.6l.412-.393c.199-.19.38-.347.627-.393a.7.7 0 0 1 .631.187.65.65 0 0 1 .195.604c-.048.235-.212.409-.411.6M4.37 16.14l-.411-.392c-.2-.19-.364-.364-.411-.6a.64.64 0 0 1 .195-.604.72.72 0 0 1 .631-.186c.247.045.428.203.627.393l.411.393c.199.19.363.364.41.6a.64.64 0 0 1-.194.604.72.72 0 0 1-.631.186c-.247-.046-.428-.203-.627-.393M.425 15.144l.411-.393c.199-.19.38-.348.627-.393a.7.7 0 0 1 .632.186.65.65 0 0 1 .194.604c-.047.236-.212.41-.41.6l-.412.393c-.198.19-.38.347-.627.393a.7.7 0 0 1-.631-.186.65.65 0 0 1-.195-.604c.048-.236.212-.41.411-.6">
+                                </path>
+                            </g>
+                            <g fill="currentColor" data-svg-origin="29.07896614074707 13.7540864944458"
+                                transform="matrix(1,0,0,1,0,0)"
+                                style="translate: none; rotate: none; scale: none; transform-origin: 0px 0px;">
+                                <path
+                                    d="m26.583 12.369.41.393c.2.19.381.347.628.393a.7.7 0 0 0 .631-.187.65.65 0 0 0 .195-.604c-.047-.235-.212-.41-.41-.6l-.412-.392c-.199-.19-.38-.348-.627-.393a.7.7 0 0 0-.631.186.65.65 0 0 0-.195.604c.048.236.212.41.41.6M28.252 14.544c.165.162.243.38.195.604-.047.236-.212.41-.41.6l-.412.393c-.199.19-.38.347-.627.393a.7.7 0 0 1-.631-.186.65.65 0 0 1-.195-.604c.048-.236.212-.41.41-.6l.412-.393c.199-.19.38-.347.627-.393a.7.7 0 0 1 .631.186M29.905 14.544a.72.72 0 0 1 .631-.186c.247.046.428.203.627.393l.411.393c.2.19.363.364.411.6a.64.64 0 0 1-.195.604.72.72 0 0 1-.631.186c-.247-.046-.428-.203-.627-.393l-.411-.393c-.2-.19-.363-.364-.411-.6a.64.64 0 0 1 .195-.604M29.9 12.964a.65.65 0 0 1-.194-.604c.047-.236.212-.41.41-.6l.412-.393c.198-.19.38-.347.627-.393a.7.7 0 0 1 .631.187.65.65 0 0 1 .195.604c-.048.235-.212.41-.411.6l-.411.392c-.199.19-.38.348-.627.393a.7.7 0 0 1-.632-.186">
+                                </path>
+                            </g>
+                        </svg></div>
+                </div>
+            </div>
+        </div>
+        <section aria-hidden="true" id="start-of-content"></section>
+    </nav>
+    <main id="main">
+        <div class="HomepageHeroBespoke HomepageHeroBespoke_root__z4DvB" style="opacity: 1;">
+            <div class="HomepageHeroBespoke_wrapper__R7YF8">
+                <h1 class="visually-hidden">It's not housing. It's the operating system for stabilized living.</h1>
+                <h1 class="DynamicTag DynamicTag_root__WG0Ri HomepageHeroBespoke_title__C_bJm" aria-hidden="true"
+                    data-safe-split-text="uFGVZm" style="font-family: 'Geist', 'Geist Sans', sans-serif !important;">
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">It's</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">not</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">housing.</div> <br aria-hidden="true">
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">It's</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">the</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">operating</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">system</div> <br aria-hidden="true">
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">for</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">stabilized</div>
+                    <div style="font-family: 'Geist', 'Geist Sans', sans-serif !important; position: relative; display: inline-block; translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px);"
+                        class="split-word" aria-hidden="true">living.</div>
+                </h1>
+                <div class="HomepageHeroBespoke_videoWrapper__clMjH" style="--clip-top: 0%;">
+                    <div class="Media Media_root__qNahw HomepageHeroBespoke_video__lYhfm Media_ratio16by9__C2QuU Media_wide__xXuUg"
+                        style="translate: none; rotate: none; scale: none; transform: translate(0px, 0px);">
+                        <div class="Media_container__Cws3C">
+                            <div class="Media_videoButtonContainer__tF6cs"
+                                style="display: flex; gap: 1rem; position: absolute; bottom: 3rem; left: 3rem; z-index: 10;">
+
+                                <button tabindex="0" id="heroMuteButton"
+                                    class="VideoButton VideoButton_root__Dy2fv VideoButton_default__q6InD Media_videoButtonIcon__QoFm0"
+                                    aria-label="Unmute" aria-hidden="false">
+                                    <div class="VideoButtonBackground VideoButton_background__OkmD3">
+                                    </div>
+                                    <div class="VideoButton_track___SRqX">
+                                    </div>
+                                    <div class="VideoButton_gradient__yrhaC" style="--progress: 1;">
+                                    </div>
+                                    <div class="VideoButton_front__OTjAd">
+                                    </div>
+                                    <div class="VideoButton_icon__WNTDF" id="heroMuteIcon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor" aria-hidden="true" class="VideoButton_svg___hJhE"
+                                            style="width: 1.2rem; height: 1.2rem;">
+                                            <!-- Muted Icon -->
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="Media_videoContainer__ID5oo Media_noImage__v3uIZ">
+                                <div class="BaseVideo BaseVideo_root__D4U1s Media_media__UMZXy Media_video__gOXsr">
+                                    <video id="heroVideoEl"
+                                        class="BaseVideo_video__bYtba BaseVideo_border-radius-lg__shdhi" loop
+                                        preload="auto" playsinline aria-hidden="false" autoplay muted>
+                                        <source src="video_of_360.mp4#t=0.001" type="video/mp4">
+                                    </video>
+                                    <div class="BaseVideo_captionsAndControls__YvLMf BaseVideo_border-radius-lg__shdhi">
+                                        <div class="BaseVideo_captions__JJ9X2" aria-live="polite">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="PageHome_contentBespoke__ZkpR3">
+            <div class="HomepageContentBespoke HomepageContentBespoke_root__W9khF">
+
+                <div class="HomepageContentBespoke_mainContainer__cuN8J">
+                    <div class="HomepageContentBespoke_horizontalTextContainer__Jr0f0">
+                        <div class="HomepageContentBespoke_textContainer__1TpyM">
+                            <div
+                                class="TextContent TextContent_root__pMawG TextContent_center___gGvS TextContent_d5___ZjDq TextContent_default__uLQew HomepageContentBespoke_textContent__kspYU">
+                                <div class="TextContent_firstContainer__Y4D9q">
+                                    <h2 class="DynamicTag DynamicTag_root__WG0Ri TextContent_eyebrow__hvADT">A better
+                                        way to LIVE</h2>
+                                    <p class="visually-hidden">Spend your time on living. Let the system handle the
+                                        rest.</p>
+                                    <p class="DynamicTag DynamicTag_root__WG0Ri TextContent_title__jbry5"
+                                        aria-hidden="true" data-safe-split-text="53y4Bp" style>
+                                    <div class="split-line" aria-hidden="true" style="text-align: left;">Spend your time
+                                        on living. </div>
+                                    <div class="split-line" aria-hidden="true" style="text-align: left;">Let the system
+                                        handle the rest. </div>
+                                    </p>
+                                </div>
+                            </div>
+                            <button aria-hidden="true" class="HiddenCta HiddenCta_root__DGcIq" tabindex="0">
+                                <div>Skip to second scrolling section</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="HomepageContentBespoke_clipContainer__PaUmt"
+                        style="--clip-border-radius: 3.6rem; --clip-left: -1.8408rem; --clip-bottom: 0rem; --clip-right: 82.4507rem; --clip-top: 2rem;">
+                        <div class="HomepageContentBespoke_transformContainer__iPl8h">
+                            <div class="HomepageContentBespoke_imageWrapper__R6zmp">
+                                <img class="BaseImage BaseImage_root__atZLD HomepageContentBespoke_image__FiuI4 BaseImage_loaded__l6sZ8"
+                                    decoding="async" src="img_1.png" alt sizes="1600px">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- Closes mainContainer -->
+            </div> <!-- Closes HomepageContentBespoke_root -->
+        </div> <!-- Closes PageHome_contentBespoke -->
+
+
+
+        <!-- SECTION 4: Crossfade Carousel -->
+        <section id="section4-crossfade" class="Section3_root">
+            <div class="Section3_container">
+
+                <!-- Left Text Card -->
+                <div class="Section3_textCard">
+                    <p class="Section3_eyebrow">IT'S NOT HOUSING, IT'S A...</p>
+                    <div class="Section3_wordList">
+                        <span class="crossfade-text active">Care Hub</span>
+                        <span class="crossfade-text">Calm Space</span>
+                        <span class="crossfade-text">Reentry Ready</span>
+                        <span class="crossfade-text">Emergency Response</span>
+                        <span class="crossfade-text">Community Command</span>
+                    </div>
+                    <a href="#" class="Section3_btn" id="section4-btn">
+                        THE 360D.AI EXPERIENCE
+                        <svg width="6" height="10" viewBox="0 0 5 10" fill="none" stroke="currentColor"
+                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m1 9 2.384-2.384a2.286 2.286 0 0 0 0-3.232L1 1"></path>
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Right Media Card -->
+                <div class="Section3_mediaCard">
+                    <!-- Overlapping images for crossfade -->
+                    <img class="crossfade-img active" src="images sec 4]]/Gemini_Generated_Image_4ryrnl4ryrnl4ryr.png"
+                        alt="Care Hub">
+                    <img class="crossfade-img" src="images sec 4]]/Calm Space.png" alt="Calm Space">
+                    <img class="crossfade-img" src="images sec 4]]/ReEntry Ready.png" alt="Reentry Ready">
+                    <img class="crossfade-img" src="images sec 4]]/Emergency Response.PNG" alt="Emergency Response">
+                    <img class="crossfade-img" src="images sec 4]]/Family and Community Ready.png"
+                        alt="Community Command">
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Apple-style Feature Section -->
+        <section id="section5-feature">
+            <!-- Top heading area -->
+            <div class="s5-text-top" style="padding-top: 12rem; padding-bottom: 15rem;">
+                <p class="s5-eyebrow">The future of stabilized living</p>
+                <p class="s5-subpara">Intelligent automation<br>Interoperable systems<br>Trusted infrastructure</p>
+            </div>
+
+            <!-- Full-width image -->
+            <div class="s5-image-wrapper">
+                <img src="sec 4 image.png" alt="360D.AI Community Feature" class="s5-image">
+            </div>
+
+            <!-- Bottom subheading + CTA (Apple portal-content style) -->
+            <div class="s5-portal-content">
+                <div class="s5-portal-row">
+                    <div class="s5-portal-copy">
+                        <p class="s5-subheading">360D.AI transforms how communities connect, respond, and thrive. From
+                            emergency coordination to daily care, our platform puts the power of technology in the hands
+                            of those who need it most.</p>
+                        <p class="s5-portal-cta">
+                            <a href="#" class="s5-cta">Explore the Platform ↗</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

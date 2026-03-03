@@ -1,0 +1,50 @@
+# Python scripts and bytecode
+*.py
+__pycache__/
+
+# Fragment files and temporary extracts
+nav.html
+hero.html
+section2.html
+extracted_styles.css
+formatted.html
+nav_elements.html
+Production
+destination
+js
+js(1)
+f.txt
+f(1).txt
+saved_resource*
+dc_pre*
+
+# Reference recordings and binary data
+*.mp4
+!video_of_360.mp4
+2988570648089547
+
+# OS and IDE files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Browser-saved artifacts
+*.js.download
+_buildManifest.js.download
+_ssgManifest.js.download
+_app-57bb97e26cb2bd99.js.download
+activityi.html
+activityi(1).html
+hotjar-2836727.js.download
+gtm.js.download
+fbevents.js.download
+up.js.download
+events.js.download
+ping.min.js.download
+otBannerSdk.js.download
+otSDKStub.js.download
+
+# Exclude workspace organization tools
+clean_workspace/
+organize_workspace.py
