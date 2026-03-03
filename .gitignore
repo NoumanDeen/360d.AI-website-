@@ -1,50 +1,26 @@
-# Python scripts and bytecode
-*.py
-__pycache__/
+# Ignore everything by default
+*
 
-# Fragment files and temporary extracts
-nav.html
-hero.html
-section2.html
-extracted_styles.css
-formatted.html
-nav_elements.html
-Production
-destination
-js
-js(1)
-f.txt
-f(1).txt
-saved_resource*
-dc_pre*
+# Allow the .gitignore itself
+!.gitignore
 
-# Reference recordings and binary data
-*.mp4
+# Allow core source files
+!index.html
+!style.css
+!script.js
+!2f1823c4febb0d78.css
+
+# Allow essential assets
 !video_of_360.mp4
-2988570648089547
+!img_1.png
+!sec 4 image.png
+!e01c6d5a26dac546cc06e775dab738a3.png
 
-# OS and IDE files
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
+# Allow Section 4 images folder and its contents
+!images sec 4]]/
+!images sec 4]]/*
 
-# Browser-saved artifacts
-*.js.download
-_buildManifest.js.download
-_ssgManifest.js.download
-_app-57bb97e26cb2bd99.js.download
-activityi.html
-activityi(1).html
-hotjar-2836727.js.download
-gtm.js.download
-fbevents.js.download
-up.js.download
-events.js.download
-ping.min.js.download
-otBannerSdk.js.download
-otSDKStub.js.download
-
-# Exclude workspace organization tools
-clean_workspace/
-organize_workspace.py
+# Allow specific fonts needed for the design (webfonts/woff2)
+!geist-font-v1.7.0/
+!geist-font-v1.7.0/**/
+!geist-font-v1.7.0/**/*.woff2
