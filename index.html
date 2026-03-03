@@ -80,8 +80,8 @@
 
         /* Fix for sharp bottom corners on video using hardware acceleration trick and clip-path */
         .HomepageHeroBespoke_videoWrapper__clMjH {
-            /* Massive 6.4rem bottom curve, perfectly round */
-            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            /* Uniform 3.6rem curve on all corners — bottom matches top */
+            border-radius: 3.6rem !important;
             overflow: hidden !important;
             -webkit-mask-image: -webkit-radial-gradient(white, black);
             mask-image: -webkit-radial-gradient(white, black);
@@ -90,8 +90,8 @@
             backface-visibility: hidden;
             display: block;
             /* Apply clip-path ONLY to the outer visible box, NOT the overflowing video itself */
-            clip-path: inset(0px round 3.6rem 3.6rem 6.4rem 6.4rem) !important;
-            -webkit-clip-path: inset(0px round 3.6rem 3.6rem 6.4rem 6.4rem) !important;
+            clip-path: inset(0px round 3.6rem) !important;
+            -webkit-clip-path: inset(0px round 3.6rem) !important;
         }
 
         .HomepageHeroBespoke_video__lYhfm,
@@ -100,12 +100,12 @@
         .BaseVideo_root__D4U1s,
         .Media_media__UMZXy,
         .Media_video__gOXsr {
-            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            border-radius: 3.6rem !important;
             overflow: hidden !important;
         }
 
         #heroVideoEl {
-            border-radius: 3.6rem 3.6rem 6.4rem 6.4rem !important;
+            border-radius: 3.6rem !important;
             overflow: hidden !important;
             /* Explicitly removed clip-path from the video tag, because object-fit: cover makes the video larger than this container and pushes the curved corners out of bounds! */
         }
@@ -197,69 +197,278 @@
             display: none !important;
         }
 
+        /* --- Hero Section Height Increase + Mint Green BG --- */
+        .HomepageHeroBespoke_root__z4DvB {
+            min-height: 110vh !important;
+            background-color: #ffffff !important;
+        }
+
+        .HomepageHeroBespoke_wrapper__R7YF8 {
+            min-height: 110vh !important;
+            background-color: #ffffff !important;
+        }
+
+        .HomepageHeroBespoke_videoWrapper__clMjH {
+            min-height: 85vh !important;
+        }
+
+        /* --- Remove video hover expand animation --- */
+        .HomepageHeroBespoke_videoWrapper__clMjH,
+        .HomepageHeroBespoke_videoWrapper__clMjH:hover,
+        .HomepageHeroBespoke_video__lYhfm,
+        .HomepageHeroBespoke_video__lYhfm:hover,
+        .Media_root__qNahw,
+        .Media_root__qNahw:hover,
+        .Media_container__Cws3C,
+        .Media_container__Cws3C:hover,
+        .Media_videoContainer__ID5oo,
+        .Media_videoContainer__ID5oo:hover,
+        #heroVideoEl,
+        #heroVideoEl:hover {
+            transform: translateZ(0) !important;
+            scale: 1 !important;
+            transition: none !important;
+        }
+
         /* --- Section 1 Mobile Optimizations --- */
-        @media (max-width: 767px) {
+        /* Moved to style.css */
 
-            /* Reduce top padding of the title */
-            body .HomepageHeroBespoke_root__z4DvB .HomepageHeroBespoke_title__C_bJm {
-                padding-top: 10rem !important;
-                /* Pull up text */
-                padding-bottom: 2rem !important;
-                /* Reduce space before video */
-                font-size: 3.2rem !important;
-                /* Slightly smaller for mobile */
-                line-height: 1.15 !important;
-                max-width: 90vw !important;
-            }
-
-            /* Make text wrap closer to screenshot if possible, without changing the copy */
-            body .HomepageHeroBespoke_title__C_bJm .split-word {
-                font-size: 3.2rem !important;
-            }
-
-            /* Adjust video border radius to be equal on all corners for mobile (approx 3.6rem) */
-            body .HomepageHeroBespoke_videoWrapper__clMjH {
-                border-radius: 3.6rem !important;
-                clip-path: inset(0px round 3.6rem) !important;
-                -webkit-clip-path: inset(0px round 3.6rem) !important;
-                width: calc(100% - 3rem) !important;
-                /* Add a bit more side margin like screenshot */
-            }
-
-            body .HomepageHeroBespoke_video__lYhfm,
-            body .Media_container__Cws3C,
-            body .Media_videoContainer__ID5oo,
-            body .BaseVideo_root__D4U1s,
-            body .Media_media__UMZXy,
-            body .Media_video__gOXsr,
-            body #heroVideoEl {
-                border-radius: 3.6rem !important;
-            }
-
-            /* Perfectly center the Zoox logo in the navbar on mobile */
-            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_routes__woI6v li:nth-child(2) {
-                position: absolute !important;
-                left: 50% !important;
-                transform: translateX(-50%) !important;
+        /* --- Desktop Specific Overrides for Section 4 --- */
+        @media (min-width: 769px) {
+            #section4-crossfade .Section3_container {
+                padding-left: 2rem !important;
+                padding-right: 2rem !important;
+                max-width: none !important;
                 margin: 0 !important;
-                padding: 0 !important;
             }
 
-            /* Remove desktop translative adjustments on logo */
-            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_routes__woI6v .Nav_logo__4UQaP {
-                transform: none !important;
-                padding: 0 !important;
-            }
-
-            /* Hide the "Skip to content" button on mobile to avoid overlap */
-            .Nav_skipToMain__yN8BZ {
+            /* Hide mobile-only overlay elements on desktop */
+            .s4-word-overlay,
+            .s4-mobile-para {
                 display: none !important;
             }
 
-            /* Ensure hamburger menu has fixed placement on mobile */
-            .Nav_root__SfQ0K .Nav_wrapper__q7293 .Nav_mainNav__pyKU_ .Nav_hamburger__mtm_K {
-                left: 1rem !important;
+            /* Ensure the media card is simply rounded without the cutout bite on desktop */
+            #section4-crossfade .Section3_mediaCard {
+                clip-path: none !important;
+                -webkit-clip-path: none !important;
+                border-radius: 2.8rem !important;
+            }
+        }
+
+        /* --- Mobile: Hero text spacing --- */
+        @media (max-width: 768px) {
+            .HomepageHeroBespoke_wrapper__R7YF8 {
+                padding-top: 3rem !important;
+                padding-top: 3rem !important;
+            }
+
+            h1.HomepageHeroBespoke_title__C_bJm,
+            .HomepageHeroBespoke_title__C_bJm {
+                margin-top: 5rem !important;
+                display: block !important;
+            }
+
+            /* === Mobile Floating Pill Navbar on Scroll === */
+
+            /* Hide the original nav on mobile when scrolled — pill takes over */
+            nav.Nav.scrolled {
+                display: none !important;
+            }
+
+            /* Standalone pill nav — hidden by default, shown via JS */
+            #mobile-pill-nav {
+                display: none;
+                position: fixed;
+                top: 1.2rem;
+                left: 50%;
+                transform: translateX(-50%);
+                width: auto;
+                background: white;
+                border-radius: 10rem;
+                box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12), 0 1px 6px rgba(0, 0, 0, 0.08);
+                padding: 0.55rem 1.6rem;
+                align-items: center;
+                justify-content: center;
+                gap: 1.8rem;
+                z-index: 9999;
+            }
+
+            #mobile-pill-nav.visible {
+                display: flex;
+            }
+
+            #mobile-pill-nav .pill-hamburger {
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                cursor: pointer;
+                padding: 4px;
+                flex-shrink: 0;
+            }
+
+            #mobile-pill-nav .pill-hamburger span {
+                display: block;
+                width: 15px;
+                height: 2.5px;
+                background: #494949;
+                border-radius: 3px;
+            }
+
+            #mobile-pill-nav .pill-logo img {
+                height: 50px;
+                width: auto;
+                object-fit: contain;
+                display: block;
+            }
+
+            /* === Section 4 Mobile: Stack layout === */
+
+            /* Stack text above image, add padding below card, ensure pure white background */
+            #section4-crossfade {
+                padding: 0 0 8rem 0 !important;
+                background: #ffffff !important;
+            }
+
+            #section4-crossfade .Section3_container {
+                flex-direction: column !important;
+                gap: 0 !important;
+                padding: 0 !important;
+                height: auto !important;
+                min-height: 0 !important;
+            }
+
+            /* Text card: tight, centered, clear the pill nav at top */
+            #section4-crossfade .Section3_textCard {
+                order: 1 !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: 0 !important;
+                border-radius: 0 !important;
+                padding: 6rem 2rem 2rem !important;
+                background-color: #ffffff !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                text-align: center !important;
+                gap: 1.4rem !important;
+            }
+
+            /* Hide word list on mobile, show the single paragraph instead */
+            #section4-crossfade .Section3_wordList {
+                display: none !important;
+            }
+
+            #section4-crossfade .s4-mobile-para {
+                display: block !important;
+                font-size: 2.8rem !important;
+                /* large, bold, black like Zoox mobile text */
+                font-weight: 600 !important;
+                color: #1d1d1f !important;
+                letter-spacing: -0.02em !important;
+                line-height: 1.1 !important;
+                text-align: center !important;
+                margin: 0.4rem 0 2rem 0 !important;
+            }
+
+            /* All crossfade words hidden except active */
+            #section4-crossfade .crossfade-text {
+                display: none !important;
+            }
+
+            /* Active word: big centered headline */
+            #section4-crossfade .crossfade-text.active {
+                display: block !important;
+                font-size: 3.2rem !important;
+                font-weight: 700 !important;
+                color: #1d1d1f !important;
+                letter-spacing: -0.02em !important;
+                line-height: 1.1 !important;
+                text-align: center !important;
+                transition: opacity 0.6s ease !important;
+            }
+
+            /* Card wrap: full-width container, relative for overlay */
+            #section4-crossfade .s4-card-wrap {
+                order: 2 !important;
                 position: relative !important;
+                display: block !important;
+                width: calc(100% - 3rem) !important;
+                margin: 0 1.5rem 0 1.5rem !important;
+                padding: 0 !important;
+            }
+
+            /* Portrait card — full width, smooth invisible borders */
+            #section4-crossfade .Section3_mediaCard {
+                width: 100% !important;
+                height: auto !important;
+                aspect-ratio: 376 / 500 !important;
+                border-radius: 2.8rem !important;
+                position: relative !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                display: block !important;
+                clip-path: url(#section4-cutout) !important;
+                -webkit-clip-path: url(#section4-cutout) !important;
+                /* removed box-shadow so it doesn't bleed behind the word overlay */
+            }
+
+
+            /* Word label — fixed-size grid box matching Zoox code exactly */
+            .s4-word-overlay {
+                position: absolute !important;
+                bottom: 0 !important;
+                right: 0 !important;
+                z-index: 4 !important;
+                width: 18rem !important;
+                height: 8rem !important;
+                display: grid !important;
+                place-items: center !important;
+                text-align: center !important;
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-size: 1.6rem !important;
+                font-weight: 700 !important;
+                padding: 1rem 1.6rem !important;
+                letter-spacing: 0.01em !important;
+                white-space: normal !important;
+                word-break: break-word !important;
+                line-height: 1.3 !important;
+                border: none !important;
+                outline: none !important;
+                border-top-left-radius: 2.8rem !important;
+                transition: opacity 0.4s ease !important;
+            }
+        }
+
+        /* === 4K / Wide screens: Section 4 stretches full width === */
+        @media (min-width: 1440px) {
+            #section4-crossfade {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+
+            /* Make sure image fills the card completely */
+            #section4-crossfade .Section3_mediaCard img.crossfade-img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+                display: block !important;
+            }
+
+            #section4-crossfade .Section3_container {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            #section4-crossfade .Section3_mediaCard {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
+
+            #section4-crossfade .s4-card-wrap {
+                max-width: 100% !important;
+                width: 100% !important;
             }
         }
     </style>
@@ -304,7 +513,7 @@
                             </path>
                         </svg></div>
                 </button>
-                <ul class="Nav_routes__woI6v">
+                <ul class="Nav_routes__woI6v" style="display: flex !important; opacity: 1 !important;">
                     <li>
                         <div>
                             <div class="NavLink NavLink_root__DY6vM"
@@ -331,7 +540,7 @@
                             </div>
                         </div>
                     </li>
-                    <li style="margin: 0 2rem;">
+                    <li id="nav-logo-li" style="margin: 0 2rem;">
                         <a class="Nav_logo__4UQaP" tabindex="0" aria-label="360D Homepage" href="/"
                             style="translate: none; rotate: none; scale: none; opacity: 1; transform: translate(0px, 0px); text-decoration: none; color: currentColor; display: flex; align-items: center; justify-content: center;">
                             <img src="e01c6d5a26dac546cc06e775dab738a3.png" alt="360D.AI Logo"
@@ -548,6 +757,7 @@
                         <span class="crossfade-text">Emergency Response</span>
                         <span class="crossfade-text">Community Command</span>
                     </div>
+                    <p class="s4-mobile-para" style="display: none;">Coordinated support when it matters most.</p>
                     <a href="#" class="Section3_btn" id="section4-btn">
                         THE 360D.AI EXPERIENCE
                         <svg width="6" height="10" viewBox="0 0 5 10" fill="none" stroke="currentColor"
@@ -557,16 +767,29 @@
                     </a>
                 </div>
 
-                <!-- Right Media Card -->
-                <div class="Section3_mediaCard">
-                    <!-- Overlapping images for crossfade -->
-                    <img class="crossfade-img active" src="images sec 4]]/Gemini_Generated_Image_4ryrnl4ryrnl4ryr.png"
-                        alt="Care Hub">
-                    <img class="crossfade-img" src="images sec 4]]/Calm Space.png" alt="Calm Space">
-                    <img class="crossfade-img" src="images sec 4]]/ReEntry Ready.png" alt="Reentry Ready">
-                    <img class="crossfade-img" src="images sec 4]]/Emergency Response.PNG" alt="Emergency Response">
-                    <img class="crossfade-img" src="images sec 4]]/Family and Community Ready.png"
-                        alt="Community Command">
+                <!-- Right Media Card (wrapped for Zoox-style overlay) -->
+                <div class="s4-card-wrap">
+                    <div class="Section3_mediaCard">
+                        <!-- Overlapping images for crossfade -->
+                        <img class="crossfade-img active"
+                            src="images sec 4]]/Gemini_Generated_Image_4ryrnl4ryrnl4ryr.png" alt="Care Hub">
+                        <img class="crossfade-img" src="images sec 4]]/Calm Space.png" alt="Calm Space">
+                        <img class="crossfade-img" src="images sec 4]]/ReEntry Ready.png" alt="Reentry Ready">
+                        <img class="crossfade-img" src="images sec 4]]/Emergency Response.PNG" alt="Emergency Response">
+                        <img class="crossfade-img" src="images sec 4]]/Family and Community Ready.png"
+                            alt="Community Command">
+                    </div>
+
+                    <svg style="position: absolute; width: 0; height: 0; pointer-events: none;">
+                        <defs>
+                            <clipPath id="section4-cutout">
+                                <path d="" />
+                            </clipPath>
+                        </defs>
+                    </svg>
+
+                    <!-- Word label to the right in white space -->
+                    <span class="s4-word-overlay">Care Hub</span>
                 </div>
             </div>
         </section>
@@ -600,6 +823,18 @@
         </section>
 
     </main>
+
+    <!-- Standalone Mobile Scroll Pill Nav -->
+    <div id="mobile-pill-nav">
+        <div class="pill-hamburger" id="pillHamburger">
+            <span></span>
+            <span></span>
+        </div>
+        <div class="pill-logo">
+            <img src="e01c6d5a26dac546cc06e775dab738a3.png" alt="360D.AI Logo">
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
