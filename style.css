@@ -1753,8 +1753,8 @@ body.ios .FormInput_root__AUdz7 .FormInput_inputContainer__YVa_N .FormInput_inpu
 }
 
 .AnimatedImage_root__0Q6AV .AnimatedImage_desktopAsset__ELH38 .AnimatedImage_image__gWea7 {
-    -webkit-clip-path: url(#mask);
-    clip-path: url(#mask);
+    -webkit-clip-path: url("assets/#mask");
+    clip-path: url("assets/#mask");
     height: 100%;
     left: 0;
     object-fit: cover;
@@ -11003,7 +11003,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardS_412463;
     font-style: normal;
     font-weight: 400;
-    src: url(/_next/static/media/d06a438de3f1c613-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/d06a438de3f1c613-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -11011,7 +11011,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardS_412463;
     font-style: normal;
     font-weight: 500;
-    src: url(/_next/static/media/35d2f15e759c07cc-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/35d2f15e759c07cc-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -11019,7 +11019,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardS_412463;
     font-style: normal;
     font-weight: 700;
-    src: url(/_next/static/media/79dcfcd742ab5135-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/79dcfcd742ab5135-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -11044,7 +11044,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardL_53dfc7;
     font-style: normal;
     font-weight: 400;
-    src: url(/_next/static/media/047cca8d702faadc-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/047cca8d702faadc-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -11052,7 +11052,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardL_53dfc7;
     font-style: normal;
     font-weight: 500;
-    src: url(/_next/static/media/27b98a7a098b7dc8-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/27b98a7a098b7dc8-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -11060,7 +11060,7 @@ img[src*="arttrk.com"] {
     font-family: __gtStandardL_53dfc7;
     font-style: normal;
     font-weight: 700;
-    src: url(/_next/static/media/48116d2dbdccf0e2-s.p.woff2) format("woff2")
+    src: url("assets//_next/static/media/48116d2dbdccf0e2-s.p.woff2") format("woff2")
 }
 
 @font-face {
@@ -13079,7 +13079,7 @@ img[src*="arttrk.com"] {
 
 .BaseImage_root__atZLD.BaseImage_onError__LaIeQ:after {
     background-color: #d3e4df;
-    background-image: url(/_next/static/media/fallback-image.563209a6.png);
+    background-image: url("assets//_next/static/media/fallback-image.563209a6.png");
     background-position: 50%;
     background-size: cover;
     content: "";
@@ -14749,7 +14749,7 @@ main {
     font-family: __gtStandardL_53dfc7;
     font-style: normal;
     font-weight: 400;
-    src: url(/_next/static/media/047cca8d702faadc-s.p.woff2) format("woff2");
+    src: url("assets//_next/static/media/047cca8d702faadc-s.p.woff2") format("woff2");
 }
 
 /* Force global application */
@@ -14775,7 +14775,7 @@ html,
     font-family: __gtStandardS_412463;
     font-style: normal;
     font-weight: 400;
-    src: url(/_next/static/media/d06a438de3f1c613-s.p.woff2) format("woff2");
+    src: url("assets//_next/static/media/d06a438de3f1c613-s.p.woff2") format("woff2");
 }
 
 :root {
