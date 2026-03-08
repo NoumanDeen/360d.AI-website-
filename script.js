@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         gestureDirection: 'vertical',
         smooth: true,
         mouseMultiplier: 1,
-        smoothTouch: false,
+        smoothTouch: true, // Enabled for buttery smooth ScrollTriggers on mobile
         touchMultiplier: 2,
         infinite: false,
     });
@@ -1086,12 +1086,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function lerp(a, b, t) { return a + (b - a) * t; }
 
     function setLayers(rx, ry) {
-        var tiltBase = 'rotateY(' + (rx * 6) + 'deg) rotateX(' + (ry * 4) + 'deg)';
+        // Limit extent on mobile to prevent cards from sliding up into text
+        var isMobile = window.innerWidth <= 768;
+        var finalRX = isMobile ? rx * 0.4 : rx;
+        var finalRY = isMobile ? Math.max(-0.15, ry * 0.4) : ry;
+
+        var tiltBase = 'rotateY(' + (finalRX * 6) + 'deg) rotateX(' + (finalRY * 4) + 'deg)';
         for (var i = 0; i < cards.length; i++) {
             if (!cards[i]) continue;
             var cfg = layerCfg[i];
-            var tx = -(rx * cfg.txMult) + cfg.txBase;
-            var ty = (ry * cfg.tyMult) + cfg.tyBase;
+            var tx = -(finalRX * cfg.txMult) + cfg.txBase;
+            var ty = (finalRY * cfg.tyMult) + cfg.tyBase;
             cards[i].style.transform = tiltBase + ' translate(' + tx + '%,' + ty + '%)';
         }
     }
