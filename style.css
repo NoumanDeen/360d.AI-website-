@@ -18058,3 +18058,105 @@ body {
         height: min(360px, 90vw);
     }
 }
+
+/* Section 2 Placeholder Button */
+.s2-placeholder-btn {
+    display: inline-block;
+    margin-top: 2rem;
+    padding: 1.2rem 3.2rem;
+    background-color: #1877F2;
+    color: #fff;
+    font-size: 1.4rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 3rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(24, 119, 242, 0.3);
+    /* For desktop alignment */
+    position: relative;
+    z-index: 10;
+}
+
+.s2-placeholder-btn:hover {
+    background-color: #145dbf;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(24, 119, 242, 0.4);
+}
+
+@media (max-width: 768px) {
+    .s2-placeholder-btn {
+        margin-top: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 1rem 2.8rem;
+        font-size: 1.2rem;
+    }
+}
+
+/* Section 6 Stacked Layout & Standard Fields */
+.s6-stacked {
+    padding-top: 0 !important;
+}
+
+.s6-solid-label {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 1rem;
+    display: block;
+    line-height: 1.4;
+    white-space: normal !important;
+    /* Forces text to NOT truncate */
+}
+
+/* For inputs under stacked labels, don't use the huge padding-top reserved for floating labels */
+.s6-form-group.s6-stacked select,
+.s6-form-group.s6-stacked textarea {
+    padding-top: 1.6rem !important;
+}
+
+/* Standard Checkboxes that match the user request */
+.s6-standard-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1.2rem;
+    padding: 2.2rem 1.6rem;
+}
+
+.s6-standard-checkboxes label {
+    display: flex !important;
+    align-items: flex-start;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    font-size: 1.25rem !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    pointer-events: auto !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    cursor: pointer;
+    line-height: 1.4;
+    max-width: none !important;
+}
+
+.s6-standard-checkboxes label:hover {
+    color: #ffffff !important;
+}
+
+.s6-standard-checkboxes input[type="checkbox"] {
+    position: relative !important;
+    width: 2rem !important;
+    height: 2rem !important;
+    -webkit-appearance: checkbox !important;
+    appearance: auto !important;
+    padding: 0 !important;
+    margin-top: 0.2rem !important;
+    margin-right: 1.2rem !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    cursor: pointer;
+    flex-shrink: 0;
+}
