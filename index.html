@@ -179,19 +179,36 @@
             display: none !important;
         }
 
-        /* --- Hero Section Height Increase + Mint Green BG --- */
+        /* --- Hero Section: Inset Video (matches sec_4_image style) --- */
         .HomepageHeroBespoke_root__z4DvB {
-            min-height: 110vh !important;
+            min-height: unset !important;
             background-color: #ffffff !important;
         }
 
         .HomepageHeroBespoke_wrapper__R7YF8 {
-            min-height: 110vh !important;
+            min-height: unset !important;
             background-color: #ffffff !important;
+            padding-bottom: 2rem !important;
         }
 
         .HomepageHeroBespoke_videoWrapper__clMjH {
-            min-height: 85vh !important;
+            min-height: unset !important;
+            width: calc(100% - 4rem) !important;
+            margin: 0 2rem 0 2rem !important;
+            aspect-ratio: 16 / 9 !important;
+            height: auto !important;
+        }
+
+        /* Video and all inner containers must fill the wrapper naturally */
+        .HomepageHeroBespoke_videoWrapper__clMjH .Media_root__qNahw,
+        .HomepageHeroBespoke_videoWrapper__clMjH .Media_container__Cws3C,
+        .HomepageHeroBespoke_videoWrapper__clMjH .Media_videoContainer__ID5oo,
+        .HomepageHeroBespoke_videoWrapper__clMjH .BaseVideo_root__D4U1s,
+        .HomepageHeroBespoke_videoWrapper__clMjH #heroVideoEl {
+            width: 100% !important;
+            height: 100% !important;
+            aspect-ratio: unset !important;
+            object-fit: cover !important;
         }
 
         /* --- Remove video hover expand animation --- */
@@ -213,7 +230,19 @@
         }
 
         /* --- Section 1 Mobile Optimizations --- */
-        /* Moved to style.css */
+        @media (max-width: 768px) {
+            .HomepageHeroBespoke_root__z4DvB {
+                min-height: unset !important;
+            }
+
+            .HomepageHeroBespoke_wrapper__R7YF8 {
+                min-height: unset !important;
+            }
+
+            .HomepageHeroBespoke_videoWrapper__clMjH {
+                min-height: unset !important;
+            }
+        }
 
         /* --- Desktop Specific Overrides for Section 4 --- */
         @media (min-width: 769px) {
@@ -389,7 +418,15 @@
         @media (max-width: 768px) {
             .HomepageHeroBespoke_wrapper__R7YF8 {
                 padding-top: 3rem !important;
-                padding-top: 3rem !important;
+                padding-bottom: 1.5rem !important;
+            }
+
+            .HomepageHeroBespoke_videoWrapper__clMjH {
+                width: calc(100% - 2.4rem) !important;
+                margin: 0 1.2rem 0 1.2rem !important;
+                aspect-ratio: 5/4 !important;
+                height: auto !important;
+                min-height: unset !important;
             }
 
             h1.HomepageHeroBespoke_title__C_bJm,
