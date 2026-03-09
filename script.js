@@ -2,15 +2,20 @@ document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
 
     // Initialize Lenis for buttery smooth virtual scrolling
+    // On mobile: smoothTouch must be OFF — it creates a virtual scroll layer that
+    // desyncs GSAP ScrollTrigger from the native touch position, causing visible lag
+    const isMobileDevice = window.innerWidth <= 768 ||
+        /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+
     const lenis = new Lenis({
         duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         direction: 'vertical',
         gestureDirection: 'vertical',
         smooth: true,
         mouseMultiplier: 1,
-        smoothTouch: true, // Enabled for buttery smooth ScrollTriggers on mobile
-        touchMultiplier: 2,
+        smoothTouch: false,   // KEEP FALSE on mobile — native scroll syncs GSAP perfectly
+        touchMultiplier: isMobileDevice ? 1 : 2,
         infinite: false,
     });
 
@@ -258,63 +263,61 @@ document.addEventListener('DOMContentLoaded', () => {
     const crossfadeImgs = document.querySelectorAll('#section4-crossfade .crossfade-img');
     const wordOverlay = document.querySelector('#section4-crossfade .s4-word-overlay');
 
-    // --- Section 2 Mobile Image Scale Animation ---
+    // --- Section 2 Mobile Animations (Android + iOS 13+ optimised) ---
     const section2MobileImage = document.querySelector('.section2-mobile-image img');
     if (section2MobileImage && window.innerWidth <= 768) {
+
+        // Pre-hint GPU compositing on all animated elements so paint happens before scroll
+        gsap.set(['.section2-mobile-image img', '.section2-mobile-eyebrow', '.section2-mobile-heading'], {
+            willChange: 'transform, opacity',
+            force3D: true
+        });
+
+        // Image: instant scrub (scrub: true = zero lag, perfect 1:1 scroll sync)
+        // Only animate transform+opacity (composited — no layout reflow)
         gsap.fromTo('.section2-mobile-image img',
-            {
-                scale: 0.85,
-                opacity: 0.5
-            },
+            { scale: 0.9, opacity: 0 },
             {
                 scale: 1,
                 opacity: 1,
-                duration: 1,
-                ease: 'power2.out',
+                ease: 'none',   // linear so scrub feels perfectly in sync
                 scrollTrigger: {
                     trigger: '.section2-mobile-image',
-                    start: 'top 80%',
-                    end: 'top 30%',
-                    scrub: 1,
-                    toggleActions: 'play none none reverse'
+                    start: 'top 90%',
+                    end: 'top 40%',
+                    scrub: true  // instant — no lag buffer
                 }
             }
         );
 
-        // Also animate the text elements
+        // Eyebrow: plays once cleanly on enter, no delay stutter
         gsap.fromTo('.section2-mobile-eyebrow',
-            {
-                y: 30,
-                opacity: 0
-            },
+            { y: 24, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.8,
+                duration: 0.6,
                 ease: 'power2.out',
                 scrollTrigger: {
                     trigger: '.section2-mobile-eyebrow',
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 88%',
+                    toggleActions: 'play none none none'  // play once, stay visible
                 }
             }
         );
 
+        // Heading: plays once, no delay, immediate after eyebrow enters viewport
         gsap.fromTo('.section2-mobile-heading',
-            {
-                y: 30,
-                opacity: 0
-            },
+            { y: 24, opacity: 0 },
             {
                 y: 0,
                 opacity: 1,
-                duration: 0.8,
-                delay: 0.2,
+                duration: 0.65,
                 ease: 'power2.out',
                 scrollTrigger: {
                     trigger: '.section2-mobile-heading',
-                    start: 'top 85%',
-                    toggleActions: 'play none none reverse'
+                    start: 'top 90%',
+                    toggleActions: 'play none none none'  // play once, stay visible
                 }
             }
         );
