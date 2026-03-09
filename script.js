@@ -1015,37 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
     gsap.registerPlugin(ScrollTrigger);
 
-    // ===== SECTION 7 NEW: Two Column Layout animations =====
-    const section7new2 = document.getElementById('section7-mobility-new');
-    if (section7new2) {
-        // Heading & eyebrow — play once, stay visible (do NOT reverse)
-        gsap.from('.s7-hero-heading, .s7-eyebrow', {
-            scrollTrigger: {
-                trigger: '#section7-mobility-new',
-                start: 'top 80%',
-                toggleActions: 'play none none none'   // ← never reverses
-            },
-            y: 40,
-            opacity: 0,
-            duration: 1.0,
-            stagger: 0.15,
-            ease: 'power3.out'
-        });
-
-        // Columns — also play once, stay visible
-        gsap.from('.s7-col', {
-            scrollTrigger: {
-                trigger: '.s7-two-col',
-                start: 'top 80%',
-                toggleActions: 'play none none none'   // ← never reverses
-            },
-            y: 60,
-            opacity: 0,
-            duration: 1.0,
-            stagger: 0.2,
-            ease: 'power3.out'
-        });
-    }
+    // Removed duplicate Section 7 DOMContentLoaded block to prevent GSAP opacity conflicts
 });
 
 // ===== SECTION 9: 3D Parallax Layers — Smooth Lerp Edition =====
@@ -1086,10 +1056,15 @@ document.addEventListener('DOMContentLoaded', () => {
     function lerp(a, b, t) { return a + (b - a) * t; }
 
     function setLayers(rx, ry) {
-        // Limit extent on mobile to prevent cards from sliding up into text
+        // Dampen the overall spread and severely restrict upward movement to prevent text overlap
         var isMobile = window.innerWidth <= 768;
-        var finalRX = isMobile ? rx * 0.4 : rx;
-        var finalRY = isMobile ? Math.max(-0.15, ry * 0.4) : ry;
+        var dampen = isMobile ? 0.35 : 0.45;
+
+        var finalRX = rx * dampen;
+        // The negative ry value causes the cards to slide UP and cover the text.
+        // We cap it heavily (-0.15 max upward multiplier for desktop, -0.10 for mobile).
+        var maxUp = isMobile ? -0.10 : -0.15;
+        var finalRY = Math.max(maxUp, ry * dampen);
 
         var tiltBase = 'rotateY(' + (finalRX * 6) + 'deg) rotateX(' + (finalRY * 4) + 'deg)';
         for (var i = 0; i < cards.length; i++) {
@@ -1143,27 +1118,31 @@ document.addEventListener('DOMContentLoaded', () => {
     if (window.DeviceOrientationEvent) {
         // iOS 13+ requires explicit permission triggered by a user action (click/touchstart)
         if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-            var permissionGranted = false;
 
-            // We listen for the first touch on the document to request permission silently
-            var requestGyro = function () {
-                if (permissionGranted) return;
+            // Create a small 'Enable 3D' button overlay for iOS users
+            var btn = document.createElement('button');
+            btn.innerHTML = 'Enable 3D Effects';
+            btn.style.cssText = 'position:absolute; top:2rem; left:50%; transform:translateX(-50%); z-index:100; padding:10px 20px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:30px; color:#fff; font-family:inherit; font-size:1.2rem; cursor:pointer; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); box-shadow:0 4px 15px rgba(0,0,0,0.2);';
+
+            var s9Container = document.querySelector('.s9-parallax-scene');
+            if (s9Container) s9Container.appendChild(btn);
+
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
                 DeviceOrientationEvent.requestPermission()
                     .then(permissionState => {
                         if (permissionState === 'granted') {
-                            permissionGranted = true;
                             window.addEventListener('deviceorientation', handleOrientation, { passive: true });
+                            btn.style.display = 'none'; // Hide button once granted
+                        } else {
+                            btn.innerHTML = '3D Disabled';
+                            btn.style.opacity = '0.5';
+                            btn.style.pointerEvents = 'none';
                         }
                     })
-                    .catch(console.error); // Ignore errors (e.g. not called from user gesture)
+                    .catch(console.error);
+            });
 
-                // Remove listener once we've tried
-                document.removeEventListener('touchstart', requestGyro);
-                document.removeEventListener('click', requestGyro);
-            };
-
-            document.addEventListener('touchstart', requestGyro, { once: true });
-            document.addEventListener('click', requestGyro, { once: true });
         } else {
             // Non-iOS 13+ devices (Android, older iOS) don't need permission
             window.addEventListener('deviceorientation', handleOrientation, { passive: true });
