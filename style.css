@@ -16573,7 +16573,7 @@ html,
 #section7-mobility {
     height: 400vh;
     /* tall so the pin has room to play */
-    background: #ffffff;
+    background: #000000;
     position: relative;
 }
 
@@ -16587,7 +16587,8 @@ html,
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #ffffff;
+    background: #000000;
+    background: radial-gradient(circle at center, #16161a 0%, #000000 100%);
 }
 
 /* Image — sits BEHIND words, hidden at start, expands to 80% */
@@ -16640,7 +16641,7 @@ html,
     font-weight: 700;
     letter-spacing: -0.03em;
     text-transform: uppercase;
-    color: #000000;
+    color: #ffffff;
     line-height: 1.0;
     opacity: 0.4;
     /* starts dim — grows to full white */
@@ -16685,7 +16686,7 @@ html,
 }
 
 .s7-scroll-indicator span {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-size: 1.1rem;
     text-transform: uppercase;
     letter-spacing: 0.2em;
@@ -16696,7 +16697,7 @@ html,
 .s7-scroll-line {
     width: 1px;
     height: 4rem;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), transparent);
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.6), transparent);
     border-radius: 1rem;
     animation: bounceLine 2s infinite ease-in-out;
 }
