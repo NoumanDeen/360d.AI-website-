@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: {
                 trigger: section7,
                 start: 'top top',
-                end: '+=300%',
+                end: isMobile ? '+=60%' : '+=150%',
                 scrub: 1,          // smooth scrub — reverses perfectly on scroll up
                 pin: '.s7-sticky-wrap',
                 pinSpacing: false,
@@ -699,44 +699,35 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 0.0);
         }
 
-        // ── PHASE 1: Words scale up + fade in (0.0 → 1.0) ──
+        // ── PHASE 1: Words scale up + fade in (0.0 → 0.6) ──
         s7Lines.forEach(function (line, i) {
             s7Tl.to(line, {
                 fontSize: 'clamp(5rem, 9vw, 11rem)',
                 opacity: 1,
                 ease: 'power2.out',
-                duration: 1.0
+                duration: 0.6
             }, i * 0.1);
         });
 
-        // ── PHASE 2: Image starts reveal + expands (0.0 → 1.0) ──
-        // This starts EXACTLY at the same time as words scaling
-        s7Tl.to(s7ImageWrap, {
-            width: isMobile ? '85%' : '60%',
-            height: isMobile ? '40vh' : '65vh',
-            opacity: 1,
-            borderRadius: '2rem',
-            ease: 'power2.inOut',
-            duration: 1.0
-        }, 0.0);
+        // Set initial state for new HTML overlay
+        const s7Overlay = section7.querySelector('.s7-overlay-text');
+        gsap.set(s7Overlay, { opacity: 0 });
 
-        // ── PHASE 3: Words fade out VERY early on (0.2 → 0.6) ──
+        // ── PHASE 2: Words fade out after scaling (0.5 → 0.9) ──
         s7Tl.to(s7Lines, {
             opacity: 0,
             autoAlpha: 0, // ensure they hide completely
             ease: 'power4.out',
-            duration: 0.4,
+            duration: 0.3,
             stagger: 0
-        }, 0.2);
+        }, 0.5);
 
-        // ── PHASE 4: Image continues to final size (1.0 → 2.5) ──
-        s7Tl.to(s7ImageWrap, {
-            width: isMobile ? '92%' : '80%',
-            height: isMobile ? '55vh' : '82vh',
-            borderRadius: isMobile ? '2.8rem' : '2.4rem',
-            ease: 'power2.out',
-            duration: 1.5
-        }, 1.0);
+        // ── PHASE 3: Fade in 360D Overlay Text (0.6 -> 1.1) ──
+        s7Tl.to(s7Overlay, {
+            opacity: 1,
+            ease: 'power2.inOut',
+            duration: 0.5
+        }, 0.6);
     }
 
     // ===== SECTION 7 NEW: 3D Card Image Scroll Animation =====
@@ -823,15 +814,19 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        s9Tl.fromTo('.s9-main-title',
-            { y: 50, opacity: 0 },
-            { y: 0, opacity: 1, duration: 1, ease: 'power3.out' }
-        )
-            .fromTo('.s9-card',
-                { y: 60, opacity: 0 },
-                { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out' },
-                '-=0.6'
+        // Entrance for side text (Desktop)
+        if (window.innerWidth > 768) {
+            s9Tl.fromTo('.s9-text-side > p, .s9-text-side > h2, .s9-action-btn',
+                { y: 30, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.8, stagger: 0.2, ease: 'power3.out' }
             );
+        }
+
+        s9Tl.fromTo('.s9-card',
+            { y: 60, opacity: 0 },
+            { y: 0, opacity: 1, duration: 1, stagger: 0.2, ease: 'power3.out' },
+            window.innerWidth > 768 ? '-=0.4' : '0'
+        );
     }
 
     // ===== SECTION 8: Get Up to Speed (Card Grid) =====
