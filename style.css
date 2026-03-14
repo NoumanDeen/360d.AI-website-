@@ -15965,8 +15965,23 @@ html,
     box-sizing: border-box;
     transform: translateX(calc(-100% - 1.6rem));
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow-y: auto;
+    overflow-y: scroll; /* Force scrolling on WebKit */
     -webkit-overflow-scrolling: touch;
+}
+
+/* Force visible scrollbar on WebKit browsers (Safari/Chrome) */
+.menu-container::-webkit-scrollbar {
+    width: 8px; /* Set a specific width */
+    background: transparent;
+}
+
+.menu-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+.menu-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .menu-overlay.is-open .menu-container {
