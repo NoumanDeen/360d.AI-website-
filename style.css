@@ -15923,7 +15923,8 @@ html,
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    height: 100dvh;
     z-index: 99999;
     pointer-events: none;
     visibility: hidden;
@@ -16126,38 +16127,100 @@ html,
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.12em;
-    color: rgba(0, 0, 0, 0.45);
+    color: #0066CC;
     text-transform: uppercase;
 }
 
 .social-icons {
     display: flex;
-    gap: 0.6rem;
+    gap: 0.8rem;
     align-items: center;
 }
 
 .social-icons a {
     width: 3.6rem;
     height: 3.6rem;
-    border: 1.5px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.8rem;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.social-icon-inner {
+    width: 2.2rem;
+    height: 2.2rem;
+    background: #f4f4f4;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #1d1d1f;
-    text-decoration: none;
-    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
-.social-icons a:hover {
-    background: #1d1d1f;
+.social-icons a[aria-label="YouTube"] .social-icon-inner {
+    color: #ff0000;
+}
+.social-icons a[aria-label="YouTube"]:hover {
+    border-color: #ff0000;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.15);
+}
+
+.social-icons a[aria-label="YouTube"]:hover .social-icon-inner {
+    background: #ffe5e5;
+}
+
+/* LinkedIn */
+.social-icons a[aria-label="LinkedIn"] .social-icon-inner {
+    color: #0077b5;
+}
+.social-icons a[aria-label="LinkedIn"]:hover {
+    border-color: #0077b5;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 119, 181, 0.15);
+}
+
+.social-icons a[aria-label="LinkedIn"]:hover .social-icon-inner {
+    background: #e6f3f8;
+}
+
+/* Instagram */
+.social-icons a[aria-label="Instagram"] .social-icon-inner {
+    color: #e1306c;
+}
+.social-icons a[aria-label="Instagram"]:hover {
+    border-color: #e1306c;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(225, 48, 108, 0.15);
+}
+
+.social-icons a[aria-label="Instagram"]:hover .social-icon-inner {
+    background: #fceaf0;
+}
+
+/* Twitter / X */
+.social-icons a[aria-label="Twitter / X"] .social-icon-inner {
+    color: #1d1d1f;
+}
+.social-icons a[aria-label="Twitter / X"]:hover {
     border-color: #1d1d1f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(29, 29, 31, 0.15);
+}
+
+.social-icons a[aria-label="Twitter / X"]:hover .social-icon-inner {
     color: #ffffff;
+    background: #1d1d1f;
 }
 
 .social-icons svg {
-    width: 1.6rem;
-    height: 1.6rem;
+    width: 1.2rem;
+    height: 1.2rem;
 }
 
 
