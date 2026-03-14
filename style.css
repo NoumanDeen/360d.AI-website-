@@ -15982,6 +15982,13 @@ html,
     border-radius: 10px;
 }
 
+/* Add padding to the top and bottom of the invisible track */
+.menu-container::-webkit-scrollbar-track {
+    background: transparent;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .menu-container::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.4);
 }
