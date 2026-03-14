@@ -15971,7 +15971,9 @@ html,
 
 /* Force visible scrollbar on WebKit browsers (Safari/Chrome) */
 .menu-container::-webkit-scrollbar {
+    -webkit-appearance: none;
     width: 8px; /* Set a specific width */
+    height: 8px;
     background: transparent;
 }
 
