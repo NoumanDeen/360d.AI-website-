@@ -15300,7 +15300,7 @@ html,
 }
 
 .Section3_eyebrow {
-    font-size: 1.2rem;
+    font-size: 3.2rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     color: #4a5d59;
@@ -15422,7 +15422,7 @@ html,
 
     .Section3_eyebrow {
         font-family: __gtStandardL_53dfc7, __gtStandardL_Fallback_53dfc7, system-ui, helvetica, arial, sans-serif, 'Geist Sans', sans-serif !important;
-        font-size: 1.25rem;
+        font-size: 1.4rem;
         font-weight: 500;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -15965,14 +15965,16 @@ html,
     box-sizing: border-box;
     transform: translateX(calc(-100% - 1.6rem));
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow-y: scroll; /* Force scrolling on WebKit */
+    overflow-y: scroll;
+    /* Force scrolling on WebKit */
     -webkit-overflow-scrolling: touch;
 }
 
 /* Force visible scrollbar on WebKit browsers (Safari/Chrome) */
 .menu-container::-webkit-scrollbar {
     -webkit-appearance: none;
-    width: 8px; /* Set a specific width */
+    width: 8px;
+    /* Set a specific width */
     height: 8px;
     background: transparent;
 }
@@ -16709,15 +16711,14 @@ html,
     font-family: var(--font-gt-standard-l), system-ui, sans-serif;
     margin-bottom: 2rem;
     line-height: 1.1;
+    font-size: clamp(2.8rem, 5vw, 5.5rem);
 }
 
 .s7-overlay-360 {
-    font-size: clamp(3.5rem, 6vw, 6.5rem);
-    font-weight: 500;
+    font-weight: 700;
 }
 
 .s7-overlay-digital {
-    font-size: clamp(2.5rem, 5vw, 5.5rem);
     font-weight: 700;
     letter-spacing: 0.05em;
 }
@@ -17245,17 +17246,19 @@ html,
     /* Reduced gap for closer grouping */
 }
 
-.footer-legal-links a {
+.footer-legal-links a,
+.footer-legal-links span,
+.footer-copyright {
     text-decoration: none;
     color: #1a1a1a;
-    font-size: 0.95rem;
-    /* Slightly smaller for cleaner look */
+    font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     display: flex;
     align-items: center;
     gap: 0.4rem;
     transition: opacity 0.3s ease;
+    margin: 0;
 }
 
 .footer-legal-links a:hover {
@@ -17276,7 +17279,7 @@ html,
 }
 
 .socials-label {
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     color: #34484a;
@@ -17288,13 +17291,13 @@ html,
 }
 
 .social-icons a svg {
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     fill: #1a1a1a;
     transition: opacity 0.3s ease;
     background: #f4f6f5;
     /* Light gray circle background */
-    padding: 0.6rem;
+    padding: 0.8rem;
     border-radius: 50%;
     box-sizing: border-box;
 }
@@ -17676,7 +17679,7 @@ html,
 
 .s9-eyebrow {
     font-family: __gtStandardL_53dfc7, __gtStandardL_Fallback_53dfc7, system-ui, helvetica, arial, sans-serif, sans-serif !important;
-    font-size: 1.1rem !important;
+    font-size: 1.4rem !important;
     font-weight: 500 !important;
     letter-spacing: 0.1em !important;
     color: #4a5d59 !important;
@@ -18320,7 +18323,7 @@ body {
     }
 
     .s9-eyebrow {
-        font-size: 1.2rem;
+        font-size: 1.6rem;
         font-weight: 700;
         letter-spacing: 0.15em;
         color: #0066cc;
@@ -18477,6 +18480,11 @@ body {
 @media (min-width: 769px) {
     .s6-standard-checkboxes {
         grid-template-columns: 1fr 1fr;
+    }
+
+    .s6-solid-label {
+        font-size: 1.6rem;
+        margin-bottom: 1.5rem;
     }
 }
 
